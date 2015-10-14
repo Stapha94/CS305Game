@@ -5,3 +5,5 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+facilitators = Facilitator.create([{ usrname: 'facilitator', passkey: 'password', report: 'Report' }])
