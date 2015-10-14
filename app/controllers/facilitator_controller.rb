@@ -1,0 +1,2 @@
+class FacilitatorController < ApplicationController
+end
