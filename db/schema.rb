@@ -11,26 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151012214415) do
+ActiveRecord::Schema.define(version: 20151014224237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "adminpack"
 
   create_table "admins", force: :cascade do |t|
-    t.string   "usrname",    limit: 255
-    t.string   "passkey",    limit: 255
+    t.string   "usrname",         limit: 255
+    t.string   "password_digest", limit: 255
     t.boolean  "authorized"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "facilitators", force: :cascade do |t|
-    t.string   "usrname",    limit: 255
-    t.string   "passkey",    limit: 255
-    t.string   "report",     limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "usrname",         limit: 255
+    t.string   "password_digest", limit: 255
+    t.string   "report",          limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "in_charge"
   end
 
   create_table "students", force: :cascade do |t|

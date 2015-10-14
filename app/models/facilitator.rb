@@ -1,3 +1,3 @@
 class Facilitator < ActiveRecord::Base
-  self.primary_key = 'usrname'
+  has_secure_password
 end
