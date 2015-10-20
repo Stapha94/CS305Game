@@ -1,0 +1,13 @@
+<div class= "header">
+ <div class= "container">
+
+  <h1>Facilitator Login</h1>
+
+ </div>
+</div>
+
+<%= form_for(:session, url: login_path) do |f| %>
+ <%= f.email_field :usrname, :placeholder => "Username" %>
+ <%= f.password_field :password_digest, :placeholder => "Password" %>
+ <%= f.submit "Log in", class: "btn-submit" %>
+<% end %>
