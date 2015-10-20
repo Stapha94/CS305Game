@@ -5,3 +5,6 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+facilitators = Facilitator.create!([{ usrname: 'facilitator', password_digest: Facilitator.digest("password"), report: 'Report', in_charge: 'true' }])
+admins = Admin.create!([{ usrname: 'admin', password_digest: Admin.digest("123456"), authorized: 'true' }])

@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+	root 'students#home'
+	get '/facilitator' => 'facilitators#home'
+	get '/gamepage' => 'game#home'
+	get '/facilitator/add-student' => 'students#new'
+	get '/facilitator/login' => 'sessions#new'
+	post 'login' => 'sessions#create'
+	resources :students, :facilitators 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
