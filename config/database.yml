@@ -59,8 +59,5 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
-#production:
-#  <<: *default
-   database: dbsul3c4d4od3b
-   username: zgfnhmrawxqwmw
-   password: <%= ENV['DBSUL3C4D4OD3B_DATABASE_PASSWORD'] %>
+ production:
+   url: postgres://zgfnhmrawxqwmw:ImzmgoNRPeZsfl22HYSGrEHT60@ec2-107-21-219-109.compute-1.amazonaws.com:5432/dbsul3c4d4od3b
