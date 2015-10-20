@@ -9,7 +9,7 @@ default: &default
 
 development:
   <<: *default
-  database: postgres
+  database: cs305game_development
 
   # The specified database role being used to connect to #postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -61,6 +61,6 @@ test:
 #
 #production:
 #  <<: *default
-#  database: cs305game_production
-#  username: cs305game
-#  password: <%= ENV['CS305GAME_DATABASE_PASSWORD'] %>
+   database: dbsul3c4d4od3b
+   username: zgfnhmrawxqwmw
+   password: <%= ENV['DBSUL3C4D4OD3B_DATABASE_PASSWORD'] %>
