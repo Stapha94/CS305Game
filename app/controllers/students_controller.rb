@@ -6,14 +6,14 @@ class StudentsController < ApplicationController
   end
   def create
     @student = Student.new(student_params)
-   if @student.save
-    redirect_to '/signup'
-   else
+    if @student.save
     redirect_to '/'
-   end
+    else
+    redirect_to '/signup'
+    end
   end
   private
   def student_params
-    params.require(:student).permit(:sid)
+    params.require(:student).permit(:sid, :enrolled)
   end
 end

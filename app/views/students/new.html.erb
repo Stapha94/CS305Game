@@ -16,6 +16,7 @@ Add Student
 
     <%= form_for(@student) do |f| %>
       <%= f.text_field :sid, :placeholder => "Study ID" %>
+        <%= f.check_box :enrolled, :placeholder => "Enrolled" %>
       <%= f.submit "Add student", class: "btn-submit" %>
     <% end %>
   </div>
