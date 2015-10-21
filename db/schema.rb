@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151021223049) do
+ActiveRecord::Schema.define(version: 20151021231229) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "password_digest", limit: 255
@@ -41,9 +41,9 @@ ActiveRecord::Schema.define(version: 20151021223049) do
     t.integer  "ch4"
     t.integer  "ch6"
     t.integer  "ch7"
-    t.boolean  "enrolled"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.boolean  "enrolled",               default: true
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
 end
