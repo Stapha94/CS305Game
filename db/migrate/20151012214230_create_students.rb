@@ -2,7 +2,10 @@ class CreateStudents < ActiveRecord::Migration
   def change
     create_table :students do |t|
       t.string :sid
+<<<<<<< HEAD
       t.string :passkey
+=======
+>>>>>>> Paul's_Branch
       t.integer :ch1
       t.integer :ch2
       t.integer :ch4
@@ -13,4 +16,8 @@ class CreateStudents < ActiveRecord::Migration
       t.timestamps null: false
     end
   end
+<<<<<<< HEAD
 end
+=======
+end
+>>>>>>> Paul's_Branch
