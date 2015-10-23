@@ -11,30 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20151014224237) do
+ActiveRecord::Schema.define(version: 20151021223049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "adminpack"
-
-  create_table "admins", force: :cascade do |t|
-    t.string   "usrname",         limit: 255
-    t.string   "password_digest", limit: 255
-    t.boolean  "authorized"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-  end
-
-  create_table "facilitators", force: :cascade do |t|
-    t.string   "usrname",         limit: 255
-    t.string   "password_digest", limit: 255
-    t.string   "report",          limit: 255
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.boolean  "in_charge"
-=======
-ActiveRecord::Schema.define(version: 20151021231229) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "password_digest", limit: 255
@@ -55,29 +36,18 @@ ActiveRecord::Schema.define(version: 20151021231229) do
     t.string   "first",           limit: 255
     t.string   "last",            limit: 255
     t.boolean  "active",                      default: true
->>>>>>> Paul's_Branch
   end
 
   create_table "students", force: :cascade do |t|
-    t.string   "sid",        limit: 255
-<<<<<<< HEAD
-    t.string   "passkey",    limit: 255
-=======
->>>>>>> Paul's_Branch
-    t.integer  "ch1"
-    t.integer  "ch2"
-    t.integer  "ch4"
-    t.integer  "ch6"
-    t.integer  "ch7"
-<<<<<<< HEAD
-    t.boolean  "enrolled"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-=======
+    t.string   "sid",        limit: 255,                null: false
+    t.integer  "ch1",                    default: 0
+    t.integer  "ch2",                    default: 0
+    t.integer  "ch4",                    default: 0
+    t.integer  "ch6",                    default: 0
+    t.integer  "ch7",                    default: 0
     t.boolean  "enrolled",               default: true
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
->>>>>>> Paul's_Branch
   end
 
 end

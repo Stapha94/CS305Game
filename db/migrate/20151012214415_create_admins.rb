@@ -8,8 +8,4 @@ class CreateAdmins < ActiveRecord::Migration
       t.timestamps null: false
     end
   end
-<<<<<<< HEAD
 end
-=======
-end
->>>>>>> Paul's_Branch

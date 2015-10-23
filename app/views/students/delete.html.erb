@@ -1,7 +1,7 @@
 <html>
 <head>
 <title>
-Add Student
+Remove Student
 </title>
 </head>
 <body>
@@ -18,9 +18,9 @@ Add Student
 <div class = "create">
   <div class="container">
 
-    <%= form_for(@student) do |f| %>
+    <%= form_for(:student, url: remove_student_path) do |f| %>
       <%= f.text_field :sid, :placeholder => "Study ID" %>
-      <%= f.submit "Add student", class: "btn btn-success" %>
+      <%= f.submit "Remove student", class: "btn btn-danger" %>
     <% end %>
   </div>
 </div>
@@ -33,6 +33,7 @@ Add Student
           <% end -%>
         </div>
       </div>
+
 
 <script language="javascript">
 </script>
