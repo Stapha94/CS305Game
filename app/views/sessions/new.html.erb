@@ -1,0 +1,22 @@
+<div class= "header">
+ <div class= "container">
+
+  <h1>Facilitator Login</h1>
+
+ </div>
+</div>
+
+<%= form_for(:session, url: login_path) do |f| %>
+ <%= f.email_field :email, :placeholder => "Email" %>
+ <%= f.password_field :password_digest, :placeholder => "Password" %>
+ <%= f.submit "Log in", class: "btn btn-success" %>
+<% end %>
+
+<div id="main-container" class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <% flash.each do |name, msg| -%>
+            <%= content_tag :div, msg, class: "alert alert-#{name}" %>
+          <% end -%>
+        </div>
+      </div>

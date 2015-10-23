@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CSProject</title>
+  <title>Cs305game</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+<div class ="nav pull-right">
+  <% if current_facilitator %>
+  <ul>
+    <li><%= current_facilitator.email %></li>
+    <li><%= link_to "Log Out", logout_path, method: "delete" %></li>
+  </ul>
+      <% end %>
+</div>
 <%= yield %>
-
+<script language="javascript">
+</script>
 </body>
 </html>
+

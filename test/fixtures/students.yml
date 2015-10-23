@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sid: MyString
+  passkey: MyString
+  ch1: 
+  ch2: 
+  ch4: 
+  ch6: 
+  ch7: 
+  enrolled: false
+
+two:
+  sid: MyString
+  passkey: MyString
+  ch1: 
+  ch2: 
+  ch4: 
+  ch6: 
+  ch7: 
+  enrolled: false

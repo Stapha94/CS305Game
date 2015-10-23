@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  usrname: MyString
+  passkey: MyString
+  authorized: false
+
+two:
+  usrname: MyString
+  passkey: MyString
+  authorized: false
