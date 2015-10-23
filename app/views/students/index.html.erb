@@ -1,0 +1,42 @@
+<div class="header">
+ <div class="container">
+	<h1>Student Table</h1>
+ </div>
+</div>
+
+<div class="container">
+ <div class="row">
+     <div class="table-responsive">
+     <table class="table">
+      <div class= "col-md-4">
+       <tr class="active">
+         <td> ID </td>
+         <td> SID </td>
+         <td> Chapter 1 </td>
+       </tr>
+      <% @students.each do |s| %>
+       <% if s.enrolled == true %>
+       <tr class="success">
+	   <td><%= s.id %></td>
+         </div>
+         <div class= "col-md-4">
+         <td><%= s.sid %></td>
+         </div>
+         <div class= "col-md-4">
+         <td><%= s.ch1 %></td>
+         </div>
+	   </tr>
+         <% else %>
+          <tr class="danger">
+	   <td><%= s.id %></td>
+         <td><%= s.sid %></td>
+         <td><%= s.ch1 %></td>
+	   </tr>
+        <% end %>
+       <% end %>
+
+	</table>
+    </div>  
+</div>
+</div>
+
