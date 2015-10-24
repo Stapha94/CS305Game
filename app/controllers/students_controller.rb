@@ -12,8 +12,15 @@ class StudentsController < ApplicationController
     @student.sid.upcase!
     respond_to do |format|
       if Student.exists?(sid: @student.sid)
-        flash[:danger] = 'Student already exists'
-        format.html { redirect_to '/facilitator/add-student' }
+        @existingstudent = Student.find_by(sid: @student.sid)
+        if @existingstudent.enrolled
+          flash[:danger] = 'Student already exists'
+          format.html { redirect_to '/facilitator/add-student' }
+        else
+          @existingstudent.update_attribute(:enrolled, true)
+          flash[:success] = 'Student added!'
+          format. html { redirect_to '/facilitator/add-student' }
+        end
       else
         @student.save
         flash[:success] = 'Student added!'
@@ -37,10 +44,9 @@ class StudentsController < ApplicationController
           format.html { redirect_to '/facilitator/remove-student' }
         end
       end	
-    end
   end
   private
-  def student_params
-    params.require(:student).permit(:sid)
-  end
+    def student_params
+      params.require(:student).permit(:sid)
+    end
 end
