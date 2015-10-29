@@ -1,4 +1,9 @@
+require "csv"
+
 class StudentsController < ApplicationController
+
+  before_action :require_facilitator, only: [:create, :new, :delete, :remove, :index]
+
   def home
   end
   def index

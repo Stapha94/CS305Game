@@ -11,8 +11,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151021223049) do
-
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "adminpack"
@@ -20,6 +18,8 @@ ActiveRecord::Schema.define(version: 20151021223049) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "adminpack"
+
+ActiveRecord::Schema.define(version: 20151021231229) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "password_digest", limit: 255
