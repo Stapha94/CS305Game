@@ -17,6 +17,10 @@ ActiveRecord::Schema.define(version: 20151021223049) do
   enable_extension "plpgsql"
   enable_extension "adminpack"
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "adminpack"
+
   create_table "admins", force: :cascade do |t|
     t.string   "password_digest", limit: 255
     t.datetime "created_at",                                 null: false
