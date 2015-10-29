@@ -2,8 +2,8 @@
 
 <div class= "header">
  <div class= "container">
-
-  <h1> Facilitator Page </h1>
+  <div style="float: left;"><button type="button" onclick="window.location.href='/'" class="btn btn-default navbar-btn">Home</button></div>
+  <h1> Facilitator Page </h2>
 
  </div>
 </div>
@@ -15,7 +15,10 @@
 <%= link_to "Add Student", '/facilitator/add-student', class: 'btn btn-success' %>
 <h2>Remove a student</h2>
   <%= link_to "Remove Student", '/facilitator/remove-student', class: 'btn btn-danger' %>
+<h2>View all students</h2>
+  <%= link_to "View All", '/facilitator/view-students', class: 'btn btn-default' %>
   
   </div>
  </div
 </div>
+
