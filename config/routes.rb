@@ -12,6 +12,10 @@ Rails.application.routes.draw do
 	delete 'logout' => 'sessions#destroy'
   get '/facilitator/remove-student' => 'students#delete'
   post 'remove-student' => 'students#remove'
+  get '/facilitator/view-students' => 'students#index'
+  resources :students
+  get '/facilitator/download-report' => 'facilitators#download'
+  resources :students
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
