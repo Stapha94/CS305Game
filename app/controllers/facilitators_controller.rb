@@ -1,6 +1,10 @@
 require 'csv'
 
 class FacilitatorsController < ApplicationController
+
+  before_action :require_admin, only: [:create, :remove]
+  before_action :require_facilitator, only: [:new, :download, :home]
+
   def new
     @facilitator = Facilitator.new
   end
@@ -30,5 +34,7 @@ class FacilitatorsController < ApplicationController
         csv << [s.id, s.sid, s.ch1, s.enrolled]      
       end
     end
+  end
+  def remove
   end
 end
