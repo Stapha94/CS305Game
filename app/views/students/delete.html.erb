@@ -17,7 +17,7 @@ Remove Student
 <div class = "create">
   <div class="container">
 
-    <%= form_for(:student, url: remove_student_path) do |f| %>
+    <%= form_for(:student, url: facilitator_remove_student_path) do |f| %>
       <%= f.text_field :sid, :placeholder => "Study ID" %>
       <%= f.submit "Remove student", class: "btn btn-danger" %>
     <% end %>

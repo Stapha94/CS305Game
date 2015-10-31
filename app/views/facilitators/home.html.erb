@@ -1,9 +1,9 @@
 
 
 <div class= "header">
- <div class= "container">
+ <div class= "container-fluid">
   <div style="float: left;"><button type="button" onclick="window.location.href='/'" class="btn btn-default navbar-btn">Home</button></div>
-  <h1> Facilitator Page </h2>
+  <h1> Facilitator Home Page </h2>
 
  </div>
 </div>
@@ -11,12 +11,59 @@
 <div class= "container">
  <div class= "row">
   <div class= "col-xs-4">
-<h2>Add a student</h2>
+    <%= form_for(:student) do |f| %>
+      <%= f.text_field :sid, :placeholder => "Study ID" %>
+      <%= f.submit "Add student", class: "btn btn-success" %>
+    <% end %>
 <%= link_to "Add Student", '/facilitator/add-student', class: 'btn btn-success' %>
-<h2>Remove a student</h2>
   <%= link_to "Remove Student", '/facilitator/remove-student', class: 'btn btn-danger' %>
-<h2>View all students</h2>
-  <%= link_to "View All", '/facilitator/view-students', class: 'btn btn-default' %>
+
+<div id="main-container" class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <% flash.each do |name, msg| -%>
+            <%= content_tag :div, msg, class: "alert alert-#{name}" %>
+          <% end -%>
+        </div>
+      </div>
+
+<div class="container">
+ <div class="row">
+     <div class="table-responsive">
+     <table class="table">
+      <div class= "col-xs-4">
+       <tr class="active">
+         <td> ID </td>
+         <td> SID </td>
+         <td> Chapter 1 </td>
+       </tr>
+      <% @students.each do |s| %>
+       <% if s.enrolled == true %>
+       <tr class="success">
+	   <td><%= s.id %></td>
+         </div>
+         <div class= "col-xs-4">
+         <td><%= s.sid %></td>
+         </div>
+         <div class= "col-xs-4">
+         <td><%= s.ch1 %></td>
+         </div>
+	   </tr>
+         <% else %>
+          <tr class="danger">
+	   <td><%= s.id %></td>
+         <td><%= s.sid %></td>
+         <td><%= s.ch1 %></td>
+	   </tr>
+        <% end %>
+       <% end %>
+
+	</table>
+    </div>
+    <%= link_to "Download Report", facilitator_download_report_path, class: "btn btn-info" %>
+</div>
+</div>
+
   
   </div>
  </div

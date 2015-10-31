@@ -1,2 +1,5 @@
-id,SID,Chapter 1,Enrolled
-1,LINK54,,true
+SID,Chapter 1,Enrolled
+GILL12,0,false
+LUKE23,0,true
+PARK52,0,true
+JAME33,0,false

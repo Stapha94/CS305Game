@@ -11,6 +11,7 @@ class StudentsController < ApplicationController
   end
   def new
     @student = Student.new
+    @students = Student.all
   end
   def create
     @student = Student.new(student_params)
@@ -20,16 +21,16 @@ class StudentsController < ApplicationController
         @existingstudent = Student.find_by(sid: @student.sid)
         if @existingstudent.enrolled
           flash[:danger] = 'Student already exists'
-          format.html { redirect_to '/facilitator/add-student' }
+          format.html { redirect_to '/facilitator' }
         else
           @existingstudent.update_attribute(:enrolled, true)
           flash[:success] = 'Student added!'
-          format. html { redirect_to '/facilitator/add-student' }
+          format. html { redirect_to '/facilitator' }
         end
       else
         @student.save
         flash[:success] = 'Student added!'
-        format. html { redirect_to '/facilitator/add-student' }
+        format. html { redirect_to '/facilitator' }
       end
     end
   end
@@ -42,11 +43,11 @@ class StudentsController < ApplicationController
       respond_to do |format|
         if @student.nil? || @student.enrolled == false
           flash[:danger] = 'Could not remove student!'
-          format.html { redirect_to '/facilitator/remove-student' }
+          format.html { redirect_to '/facilitator' }
         else
           @student.update_attribute(:enrolled, false)
           flash[:success] = 'Student removed!'
-          format.html { redirect_to '/facilitator/remove-student' }
+          format.html { redirect_to '/facilitator' }
         end
       end	
   end

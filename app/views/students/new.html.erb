@@ -1,28 +1,19 @@
-<html>
-<head>
-<title>
-Add Student
-</title>
-</head>
-<body>
-<div class="header">
-<div class="container">
-<div style="float: left;"><button type="button" onclick="window.location.href='/facilitator'" class="btn btn-default navbar-btn">Back</button></div>
-<h1>Add Student
-</h1>
-</div>
+<div class= "header">
+ <div class= "container-fluid">
+  <div style="float: left;"><button type="button" onclick="window.location.href='/'" class="btn btn-default navbar-btn">Home</button></div>
+  <h1> Facilitator Home Page </h2>
+
+ </div>
 </div>
 
-
-<div class = "create">
-  <div class="container">
-
+<div class= "container">
+ <div class= "row">
+  <div class= "col-md-8">
     <%= form_for(@student) do |f| %>
       <%= f.text_field :sid, :placeholder => "Study ID" %>
-      <%= f.submit "Add student", class: "btn btn-success" %>
+      <%= f.submit "Add student", formaction: facilitator_add_student_path, class: "btn btn-success" %>
+      <%= f.submit "Remove student", formaction: facilitator_remove_student_path, class: "btn btn-danger" %>
     <% end %>
-  </div>
-</div>
 
 <div id="main-container" class="container">
       <div class="row">
@@ -33,7 +24,39 @@ Add Student
         </div>
       </div>
 
-<script language="javascript">
-</script>
-</body>
-</html>
+<div class="container">
+ <div class="row">
+     <div class="table-responsive">
+     <table class="table">
+      <div class= "col-xs-6">
+       <tr class="active">
+         <td> SID </td>
+         <td> Chapter 1 </td>
+       </tr>
+      <% @students.each do |s| %>
+       <% if s.enrolled == true %>
+       <tr class="success">
+         <td><%= s.sid %></td>
+         </div>
+         <div class= "col-xs-6">
+         <td><%= s.ch1 %></td>
+         </div>
+	   </tr>
+         <% else %>
+          <tr class="danger">
+         <td><%= s.sid %></td>
+         <td><%= s.ch1 %></td>
+	   </tr>
+        <% end %>
+       <% end %>
+
+	</table>
+    </div>
+    <%= link_to "Download Report", facilitator_download_report_path, class: "btn btn-info" %>
+</div>
+</div>
+
+  
+  </div>
+ </div
+</div>
