@@ -1,4 +1,5 @@
 require "csv"
+require "active_model/validations"
 
 class StudentsController < ApplicationController
 
@@ -28,9 +29,13 @@ class StudentsController < ApplicationController
           format. html { redirect_to '/facilitator' }
         end
       else
-        @student.save
-        flash[:success] = 'Student added!'
-        format. html { redirect_to '/facilitator' }
+        if @student.save
+          flash[:success] = 'Student added!'
+          format. html { redirect_to '/facilitator' }
+        else
+          flash[:danger] = 'Please use four letters and two numbers'
+          format. html { redirect_to '/facilitator'}
+        end
       end
     end
   end

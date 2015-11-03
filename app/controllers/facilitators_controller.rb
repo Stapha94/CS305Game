@@ -26,7 +26,7 @@ class FacilitatorsController < ApplicationController
   end
   private
   def facilitator_params
-    params.require(:facilitator).permit(:email, :first, :last, :password_digest, :active)
+    params.require(:facilitator).permit(:email, :first, :last, :password_digest, :active, :squestion, :sanswer)
   end
   private
   def generate_report
