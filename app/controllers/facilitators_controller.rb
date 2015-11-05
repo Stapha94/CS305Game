@@ -14,6 +14,7 @@ class FacilitatorsController < ApplicationController
   def create
     @facilitator = Facilitator.new(facilitator_params)
     if @facilitator.save
+      UserMailer.welcome_email(@facilitator).deliver_now
       session[:facilitator_id] = @facilitator.id
       redirect_to '/facilitator'
     else
