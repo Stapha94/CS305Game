@@ -1,4 +1,6 @@
 class AdminsController < ApplicationController
+  def home
+  end
   def new
     @admin = Admin.new
   end

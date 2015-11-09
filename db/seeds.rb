@@ -8,3 +8,4 @@
 
 facilitators = Facilitator.create!([{ email: 'test@gmail.com', first: 'Test', last: 'Testerson',  password_digest: Facilitator.digest("password") }])
 admins = Admin.create!([{ email: 'admin@gmail.com', first: 'Atest', last: 'Atesterson', password_digest: Admin.digest("password") }])
+questions = Question.create!([{ qid: 1, chapter: 1, answer: 'seeds', description: 'What part of a pumpkin is edible?' }])

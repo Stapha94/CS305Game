@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   root 'students#home'
   get '/facilitator' => 'students#new'
+  get '/admin' => 'facilitators#new'
+  resources :facilitators
+  post '/admin/add-facilitator' => 'facilitators#create'
+  post '/admin/remove-facilitator' => 'facilitators#remove'
   get '/gamepage' => 'game#home'
   post '/facilitator/add-student' => 'students#create'
   post '/facilitator/remove-student' => 'students#remove'

@@ -5,9 +5,6 @@ class FacilitatorsController < ApplicationController
   before_action :require_admin, only: [:create, :remove]
   before_action :require_facilitator, only: [:new, :download, :home]
 
-  def home
-    @student 
-  end
   def new
     @facilitator = Facilitator.new
   end
