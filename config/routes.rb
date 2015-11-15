@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   root 'students#home'
   get '/facilitator' => 'students#new'
+  get '/facilitator?sortbysid' => 'students#new'
+  get '/facilitator?sortbych1' => 'students#new'
+  get '/facilitator?sortbyreversesid' => 'students#new'
   get '/admin' => 'facilitators#new'
   resources :facilitators
   post '/admin/add-facilitator' => 'facilitators#create'

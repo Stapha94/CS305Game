@@ -17,10 +17,10 @@
           <%= f.submit "Remove student", formaction: facilitator_remove_student_path, class: "btn btn-danger" %>
         <% end %>
       </div>
-     </div>
     </div>
   </div>
  </div>
+</div>
 <div id="main-container" class="container">
       <div class="row">
         <div class="col-xs-12">
@@ -29,9 +29,22 @@
           <% end -%>
         </div>
       </div>
+  </div>
+
 
 <div class="container-fluid">
  <div class="row">
+   <div class= "dropdown">
+     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Sort by...
+       <span class="caret"></span></button>
+     <ul class="dropdown-menu">
+       <li><a data-target="#" href="/facilitator?sortbysid">SID (A-Z) </a></li>
+       <li class="divider"></li>
+       <li><a data-target="#" href="/facilitator?sortbych1" >Ch1</a></li>
+       <li class="divider"></li>
+       <li><a data-target="#" href="/facilitator?sortbyreversesid" >SID (Z-A)</a></li>
+     </ul>
+   </div>
    <div class="col-xs-12">
      <div class="table-responsive">
      <table class="table">
@@ -39,27 +52,69 @@
          <td> SID </td>
          <td> Chapter 1 </td>
        </tr>
-      <% @students.each do |s| %>
-       <% if s.enrolled%>
-       <tr class="success">
-         <td><%= s.sid %></td>
-         <td><%= s.ch1 %></td>
-	   </tr>
-         <% else %>
-          <tr class="danger">
-         <td><%= s.sid %></td>
-         <td><%= s.ch1 %></td>
-	   </tr>
-        <% end %>
+       <% if request.fullpath == '/facilitator' %>
+           <% @students.each do |s| %>
+               <% if s.enrolled%>
+                   <tr class="success">
+                     <td><%= s.sid %></td>
+                     <td><%= s.ch1 %></td>
+                   </tr>
+               <% else %>
+                   <tr class="danger">
+                     <td><%= s.sid %></td>
+                     <td><%= s.ch1 %></td>
+                   </tr>
+               <% end %>
+           <% end %>
+       <% elsif request.fullpath == '/facilitator?sortbysid' %>
+           <% @students = Student.order(:sid) %>
+            <% @students.each do |s| %>
+             <% if s.enrolled%>
+             <tr class="success">
+               <td><%= s.sid %></td>
+               <td><%= s.ch1 %></td>
+           </tr>
+               <% else %>
+                <tr class="danger">
+               <td><%= s.sid %></td>
+               <td><%= s.ch1 %></td>
+           </tr>
+              <% end %>
+             <% end %>
+       <% elsif request.fullpath == '/facilitator?sortbych1' %>
+           <% @students = Student.order(:ch1) %>
+           <% @students.each do |s| %>
+               <% if s.enrolled%>
+                   <tr class="success">
+                     <td><%= s.sid %></td>
+                     <td><%= s.ch1 %></td>
+                   </tr>
+               <% else %>
+                   <tr class="danger">
+                     <td><%= s.sid %></td>
+                     <td><%= s.ch1 %></td>
+                   </tr>
+               <% end %>
+           <% end %>
+           <% elsif request.fullpath == '/facilitator?sortbyreversesid' %>
+             <% @students = Student.order(sid: :desc) %>
+             <% @students.each do |s| %>
+                 <% if s.enrolled%>
+                     <tr class="success">
+                       <td><%= s.sid %></td>
+                       <td><%= s.ch1 %></td>
+                     </tr>
+                 <% else %>
+                     <tr class="danger">
+                       <td><%= s.sid %></td>
+                       <td><%= s.ch1 %></td>
+                     </tr>
+                 <% end %>
+             <% end %>
        <% end %>
 	</table>
      </div>
     </div>
     <%= link_to "Download Report", facilitator_download_report_path, class: "btn btn-info" %>
 </div>
-</div>
-
-  
-  </div>
- </div>
 </div>

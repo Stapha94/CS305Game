@@ -27,7 +27,7 @@ class FacilitatorsController < ApplicationController
   end
   private
   def generate_report
-    @students = Student.all
+    @students = Student.order(:sid)
     CSV.open("public/studentreport.csv", "wb") do |csv|
       csv << ["SID", "Chapter 1", "Enrolled"]
       @students.each do |s|
