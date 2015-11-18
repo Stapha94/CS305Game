@@ -6,6 +6,8 @@ class StudentsController < ApplicationController
 
   def home
   end
+  def game
+  end
   def index
     @students = Student.all
   end
@@ -15,6 +17,10 @@ class StudentsController < ApplicationController
   end
   def create
     @student = Student.new(student_params)
+    matches = true
+    if/\w{4}\d{2}/.match(@student.sid) == nil
+      matches = false;
+    end
     @student.sid.upcase!
     respond_to do |format|
       if Student.exists?(sid: @student.sid)
@@ -27,10 +33,13 @@ class StudentsController < ApplicationController
           flash[:success] = 'Student added!'
           format. html { redirect_to '/facilitator' }
         end
-      else
+      elsif matches
         @student.save
         flash[:success] = 'Student added!'
         format. html { redirect_to '/facilitator' }
+      else
+        flash[:danger] = 'Incorrect SID format'
+        format.html { redirect_to '/facilitator' }
       end
     end
   end
@@ -38,10 +47,14 @@ class StudentsController < ApplicationController
   end
   def remove
       @newstudent = Student.new(student_params)
+      matches = true
+      if/\w{4}\d{2}/.match(@newstudent.sid) == nil
+        matches = false;
+      end
       @newstudent.sid.upcase!
       @student = Student.find_by(sid: @newstudent.sid)    
       respond_to do |format|
-        if @student.nil? || @student.enrolled == false
+        if @student.nil? || @student.enrolled == false || !matches
           flash[:danger] = 'Could not remove student!'
           format.html { redirect_to '/facilitator' }
         else
@@ -55,4 +68,4 @@ class StudentsController < ApplicationController
     def student_params
       params.require(:student).permit(:sid)
     end
-end
+  end

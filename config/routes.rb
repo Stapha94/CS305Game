@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root 'students#home'
+  get '/main-game' => 'students#game'
   get '/facilitator' => 'students#new'
   get '/facilitator?sortbysid' => 'students#new'
   get '/facilitator?sortbych1' => 'students#new'
@@ -11,8 +12,12 @@ Rails.application.routes.draw do
   get '/gamepage' => 'game#home'
   post '/facilitator/add-student' => 'students#create'
   post '/facilitator/remove-student' => 'students#remove'
-  get '/facilitator/login' => 'sessions#new'
-  post 'login' => 'sessions#create'
+  get '/user-login' => 'sessions#new'
+  get '/student-login' => 'sessions#new'
+  resources :facilitators, :admins, :students
+  post 'loginuser' => 'sessions#create'
+  post 'loginstudent' => 'sessions#createstudent'
+  resources :admins
   resources :facilitators
   delete 'logout' => 'sessions#destroy'
   get '/facilitator/remove-student' => 'students#delete'

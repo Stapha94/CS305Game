@@ -14,7 +14,17 @@
     <li><%= current_facilitator.email %></li>
     <li><%= button_to "Log Out", logout_path, method: "delete" %></li>
   </ul>
-      <% end %>
+  <% elsif current_admin %>
+  <ul>
+    <li><%= current_admin.email %></li>
+    <li><%= button_to "Log Out", logout_path, method: "delete" %></li>
+  </ul>
+  <% elsif current_student %>
+      <ul>
+        <li><%= current_student.sid %></li>
+        <li><%= button_to "Log Out", logout_path, method: "delete" %></li>
+      </ul>
+  <% end %>
 </div>
 <%= yield %>
 
@@ -27,4 +37,3 @@
 </script>
 </body>
 </html>
-

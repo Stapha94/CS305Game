@@ -1,0 +1,39 @@
+<div class= "header">
+  <div class= "container-fluid">
+    <div style="float: left;"><button type="button" onclick="window.location.href='/'" class="btn btn-default navbar-btn">Home</button></div>
+    <h1> Main Game </h1>
+    <script src="assets/javascripts/phaser.min.js"></script>
+  </div>
+</div>
+
+<div class="main-container">
+<script type="text/javascript">
+
+  var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'container', {preload: preload, create: create, update: update });
+
+  function preload(){
+
+    game.load.image('garden', 'assets/garden.png');
+    this.game.scale.pageAlignHorizontally = true;
+    this.game.scale.pageAlignVertically = true;
+    this.game.scale.refresh();
+
+  }
+
+  function create(){
+
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+
+    game.add.sprite(0, 0, 'garden');
+
+  }
+
+  function update(){
+
+  }
+
+
+
+</script>
+</div>
+

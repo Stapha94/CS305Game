@@ -8,13 +8,13 @@ class AdminsController < ApplicationController
     @admin = Admin.new(admin_params)
     if @admin.save
       session[:admin_id] = @admin.id
-      redirect_to '/facilitator/add-student'
+      redirect_to '/admin'
     else
       redirect_to '/'
     end
   end
   private
   def admin_params
-    params.require(:admin).permit(:email, :passkey, :first, :last, :active)
+    params.require(:admin).permit(:email, :password_digest, :first, :last, :active)
   end
 end
