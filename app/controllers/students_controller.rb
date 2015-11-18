@@ -18,7 +18,7 @@ class StudentsController < ApplicationController
   def create
     @student = Student.new(student_params)
     matches = true
-    if/\w{4}\d{2}/.match(@student.sid) == nil
+    if/\A\w{4}\d{2}\z/.match(@student.sid) == nil
       matches = false;
     end
     @student.sid.upcase!
