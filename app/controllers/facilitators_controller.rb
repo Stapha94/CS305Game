@@ -3,7 +3,7 @@ require 'csv'
 class FacilitatorsController < ApplicationController
 
   before_action :require_admin, only: [:new, :create, :remove]
-  before_action :require_facilitator, only: [:download, :home]
+  before_action :require_facilitator, only: [:download]
 
   def new
     @facilitator = Facilitator.new
@@ -12,9 +12,11 @@ class FacilitatorsController < ApplicationController
     @facilitator = Facilitator.new(facilitator_params)
     if @facilitator.save
       UserMailer.welcome_email(@facilitator).deliver
+      flash[:success] = 'Facilitator Added'
       redirect_to '/admin'
     else
-      redirect_to '/'
+      flash[:danger] = 'Passwords Did Not Match'
+      redirect_to '/admin'
     end
   end
   def download
