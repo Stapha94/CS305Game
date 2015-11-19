@@ -12,7 +12,6 @@ class FacilitatorsController < ApplicationController
     @facilitator = Facilitator.new(facilitator_params)
     if @facilitator.save
       UserMailer.welcome_email(@facilitator).deliver
-      session[:facilitator_id] = @facilitator.id
       redirect_to '/admin'
     else
       redirect_to '/'
@@ -24,7 +23,7 @@ class FacilitatorsController < ApplicationController
   end
   private
   def facilitator_params
-    params.require(:facilitator).permit(:email, :first, :last, :password_digest)
+    params.require(:facilitator).permit(:email, :first, :last, :password, :password_confirmation)
   end
   private
   def generate_report
