@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 #added for heroku
-ruby '2.2.2', :engine => 'jruby', :engine_version => '9.0.1.0'
+ruby '2.2.2', :engine => 'jruby', :engine_version => '9.0.0.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 # Use jdbcpostgresql as the database for Active Record

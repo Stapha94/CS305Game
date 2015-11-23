@@ -1,0 +1,79 @@
+<div class= "header">
+  <div class= "container-fluid">
+    <div style="float: left;"><button type="button" onclick="window.location.href='/'" class="btn btn-default navbar-btn">Home</button></div>
+    <h1> Main Game </h1>
+    <script src="<%= asset_path('phaser.min.js') %>"></script>
+  </div>
+</div>
+
+<div class="main-container">
+<script type="text/javascript">
+
+  var game = new Phaser.Game(800, 600, Phaser.AUTO, 'container', {preload: preload, create: create, update: update }, true);
+
+  function preload(){
+
+    game.load.image('garden', '<%= asset_path("garden.png") %> ');
+    game.load.image('border', '<%= asset_path("border.png") %>');
+    game.load.image('net', '<%= asset_path("net.png") %>');
+    game.load.image('netSelect', '<%= asset_path("net-selected.png") %>');
+    game.load.image('spray', '<%= asset_path("spray.png") %>');
+    game.load.image('spraySelect', '<% asset_path("spray-selected.png") %>');
+    game.load.image('red', '<%= asset_path("red.png") %>');
+    this.game.scale.pageAlignHorizontally = true;
+    this.game.scale.pageAlignVertically = true;
+    this.game.scale.refresh();
+
+  }
+
+  var score = 0;
+  var scoreText;
+  var timer;
+  var bugsOnScreen = 0;
+  var tools;
+  var border;
+  var netSprite;
+  var spraySprite;
+
+  function create(){
+
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+    tools = game.add.group();
+    game.add.image(0, 0, 'garden');
+    border = game.add.image(0, 0, 'border');
+    game.physics.arcade.enable(border);
+    red = game.add.sprite(400, 100, 'red');
+    netSprite = game.add.sprite(50, 475, 'net');
+    spraySprite = game.add.sprite(200, 475, 'spray');
+    game.physics.arcade.enable(red);
+    spraySprite.inputEnabled = true;
+    spraySprite.input.useHandCursor = true;
+    spraySprite.input.enableDrag(true);
+    game.physics.arcade.enable(spraySprite);
+    spraySprite.body.collideWorldBounds = true;
+    scoreText = game.add.text(16, 16, 'score: 0', {fontsize: '32px', fill: '#000' });
+  }
+
+
+  function update(){
+    if(game.input.mousePointer.justReleased()){
+
+      game.physics.arcade.overlap(spraySprite, red, killBug, null, this);
+      spraySprite.reset(200, 475);
+
+    }
+  }
+
+
+
+  function killBug(spraySprite, red){
+    red.kill();
+    score += 100;
+    scoreText.text = 'Score: ' + score;
+  }
+
+
+
+</script>
+</div>
+

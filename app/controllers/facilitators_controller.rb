@@ -11,12 +11,16 @@ class FacilitatorsController < ApplicationController
   def create
     @facilitator = Facilitator.new(facilitator_params)
     if @facilitator.save
-      UserMailer.welcome_email(@facilitator).deliver
-      flash[:success] = 'Facilitator Added'
-      redirect_to '/admin'
+      respond_to do |format|
+        UserMailer.welcome_email(@facilitator).deliver
+        flash[:success] = 'Facilitator Added'
+        format.html { redirect_to '/admin' }
+      end
     else
-      flash[:danger] = 'Passwords Did Not Match'
-      redirect_to '/admin'
+      respond_to do |format|
+        flash[:danger] = 'Passwords Did Not Match'
+        format.html { redirect_to '/admin' }
+      end
     end
   end
   def download
