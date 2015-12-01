@@ -10,15 +10,20 @@ class FacilitatorsController < ApplicationController
   end
   def create
     @facilitator = Facilitator.new(facilitator_params)
-    if @facilitator.save
+    if Facilitator.exists?(email: @facilitator.email)
+      respond_to do |format|
+      flash[:danger] = 'Facilitator already exists!'
+      format.html { redirect_to '/admin' }
+      end
+    elsif @facilitator.save
       respond_to do |format|
         UserMailer.welcome_email(@facilitator).deliver
-        flash[:success] = 'Facilitator Added'
+        flash[:success] = 'Facilitator Added!'
         format.html { redirect_to '/admin' }
-      end
+        end
     else
       respond_to do |format|
-        flash[:danger] = 'Passwords Did Not Match'
+        flash[:danger] = 'Passwords Did Not Match!'
         format.html { redirect_to '/admin' }
       end
     end
