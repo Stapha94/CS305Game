@@ -12,7 +12,10 @@ class SessionsController < ApplicationController
     if Student.find_by_sid(params[:session][:sid].upcase) == nil
       flash[:danger] = 'Login failed. Check information!'
     else
-      @student = Student.find_by_sid(params[:session][:sid].upcase)
+      @newstudent = Student.find_by_sid(params[:session][:sid].upcase)
+      if @newstudent.enrolled
+        @student = Student.find_by_sid(params[:session][:sid].upcase)
+      end
     end
     respond_to do |format|
       if @student
@@ -29,7 +32,10 @@ class SessionsController < ApplicationController
       flash[:danger] = 'Login failed. Check information!'
       format.html { redirect_to '/user-login' }
     elsif Facilitator.find_by_email(params[:session][:email]) != nil
-      @facilitator = Facilitator.find_by_email(params[:session][:email])
+      @newfacilitator = Facilitator.find_by_email(params[:session][:email])
+      if @newfacilitator.active
+        @facilitator = Facilitator.find_by_email(params[:session][:email])
+      end
     elsif  Admin.find_by_email(params[:session][:email]) != nil
       @admin = Admin.find_by_email(params[:session][:email])
     end
@@ -42,7 +48,7 @@ class SessionsController < ApplicationController
         format.html {redirect_to '/admin'}
       else
         flash[:danger] = 'Login failed. Check information!'
-        format.html { redirect_to '/student-login' }
+        format.html { redirect_to '/user-login' }
       end
      end
   end
