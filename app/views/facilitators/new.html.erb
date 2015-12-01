@@ -27,12 +27,19 @@
   <div class="col_centered-xs-3">
     <div class="well">
    <%= form_for(@facilitator) do |f| %>
-      <div class="form-group"><%= f.text_field :first, :placeholder => "First Name" %></div>
-      <div class="form-group"><%= f.text_field :last, :placeholder => "Last Name" %></div>
+      <div class="form-group"><%= f.email_field :email, :placeholder => "Email" %></div>
       <div class="form-group"><%= f.submit "Remove Facilitator", formaction: admin_remove_facilitator_path, class: "btn btn-danger" %></div>
     <% end %>
     </div>
   </div>
+   <div class="col_centered-xs-3">
+     <div class="well">
+       <%= form_for(@facilitator) do |f| %>
+           <div class="form-group"><%= f.email_field :email, :placeholder => "Email" %></div>
+           <div class="form-group"><%= f.submit "Reactivate Facilitator", url: '/admin/activate-facilitator', class: "btn btn-danger" %></div>
+       <% end %>
+     </div>
+   </div>
 
 
 

@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   get '/gamepage' => 'game#home'
   post '/facilitator/add-student' => 'students#create'
   post '/facilitator/remove-student' => 'students#remove'
+  post '/admin/activate-facilitator' => 'facilitator#activate'
+  resources :admins, :facilitators
   get '/user-login' => 'sessions#new'
   get '/student-login' => 'sessions#new'
   resources :facilitators, :admins, :students
@@ -25,6 +27,7 @@ Rails.application.routes.draw do
   resources :students
   get '/facilitator/download-report' => 'facilitators#download'
   resources :students
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

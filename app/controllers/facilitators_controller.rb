@@ -22,6 +22,34 @@ class FacilitatorsController < ApplicationController
         format.html { redirect_to '/admin' }
       end
     end
+    end
+  def remove
+    @newfacilitator = Facilitator.new(facilitator_params)
+    @facilitator = Facilitator.find_by(email: @newfacilitator.email)
+    respond_to do |format|
+      if @facilitator.nil? || @facilitator.active == false
+        flash[:danger] = 'Facilitator does not exist!'
+        format.html { redirect_to '/admin' }
+      else
+        @facilitator.update_attribute(:active, false)
+        flash[:success] = 'Facilitator removed!'
+        format.html { redirect_to '/admin' }
+      end
+    end
+  end
+  def activate
+    @newfacilitator = Facilitator.new(facilitator_params)
+    @facilitator = Facilitator.find_by(email: @newfacilitator.email)
+    respond_to do |format|
+      if @facilitator.nil? || @facilitator.active == true
+        flash[:danger] = 'Facilitator does not exist or is already active!'
+        format.html { redirect_to '/admin' }
+      else
+        @facilitator.update_attribute(:active, true)
+        flash[:success] = 'Facilitator reactivated!'
+        format.html { redirect_to '/admin' }
+      end
+    end
   end
   def download
     generate_report
@@ -40,7 +68,5 @@ class FacilitatorsController < ApplicationController
         csv << [s.sid, s.ch1, s.enrolled]      
       end
     end
-  end
-  def remove
   end
 end
