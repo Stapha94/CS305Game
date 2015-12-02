@@ -1,8 +1,10 @@
 
 <div class= "header">
  <div class= "container-fluid">
-   <div style="float: left;"><button type="button" onclick="window.location.href='/user-login'" class="btn btn-default navbar-btn">Admin/Facilitator</button></div>
-     <h1>Junior Master Garderner Academy</h1>
+     <h1>Garden Academy</h1>
+   <% if !(current_admin || current_facilitator || current_student) %>
+     <div style="float: right;"><button type="button" onclick="window.location.href='/user-login'" class="btn btn-success navbar-btn">Admin/Facilitator <span class="glyphicon glyphicon-log-in"></span></button></div>
+   <% end %>
  </div>
 </div>
 
@@ -12,11 +14,14 @@
   <div class="col-xs-2">
   </div>
   <div class="col-xs-8">
-  <p> Big Start Button Goes Here </p>
-  <a href="/student-login"> <img src='<%= asset_path("start.png") %>' alt="Mountain View"> </a>
+  <a href="/student-login"> <img id="start" src='<%= asset_path("STARTBTN (transparent).png") %>'
+                                 onmousedown="this.src='<%=asset_path("STARTBTN (pressed).png") %>'"
+                                 onmouseup="this.src='<%= asset_path("STARTBTN (transparent).png") %>'"
+                                 onmouseover="this.src='<%=asset_path("STARTBTN (pressed).png") %>'"
+                                 onmouseout="this.src='<%= asset_path("STARTBTN (transparent).png") %>'"
+                                 class="img-responsive"> </a>
   </div>
   <div class="col-xs-2">
   </div>
 </div>
 </div>
-

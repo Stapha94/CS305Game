@@ -1,7 +1,6 @@
-SID,Chapter 1,Enrolled
-BENN10,0,true
-FREG13,0,true
-GILL12,0,true
-JAME33,0,false
-LUKE23,0,true
-PARK52,0,true
+SID,Chapter 1
+LUKE23,100
+PARK52,100
+JAME33,0
+BENN10,0
+GILL12,0

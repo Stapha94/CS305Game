@@ -1,15 +1,12 @@
 <div class= "header">
   <div class= "container-fluid">
-    <div style="float: left;"><button type="button" onclick="window.location.href='/'" class="btn btn-default navbar-btn">Home</button></div>
     <h1> Main Game </h1>
     <script src="<%= javascript_path "phaser.min.js" %>"></script>
   </div>
 </div>
-
-<div class="main-container">
 <script type="text/javascript">
 
-  var game = new Phaser.Game(800, 600, Phaser.AUTO, 'container', {preload: preload, create: create, update: update }, true);
+  var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'gameContainer', {preload: preload, create: create, update: update }, true);
 
   function preload(){
 
@@ -17,13 +14,40 @@
     game.load.image('border', '<%= image_path "border.png"  %>');
     game.load.image('net', '<%= image_path "net.png" %>');
     game.load.image('spray', '<%= image_path "spray.png" %>');
-    game.load.image('red', '<%= image_path "red.png" %>');
-    this.game.scale.pageAlignHorizontally = true;
-    this.game.scale.pageAlignVertically = true;
-    this.game.scale.refresh();
-
+    game.load.spritesheet('aphid', '<%= image_path "aphid.png" %>', 200, 200);
+    game.load.spritesheet('bee', '<%= image_path "bee.png" %>', 200, 200);
+    game.load.image('butterfly', '<%= image_path "butterfly.png" %>');
+    game.load.image('sound', '<%= asset_path "sound.png" %>');
+    game.load.image('nosound', '<%= asset_path "nosound.png" %>');
+    game.load.spritesheet('cornearworm', '<%= image_path "cornearwrom.png" %>', 200, 200);
+    game.load.spritesheet('cucumberbeetle', '<%= image_path "cucumberbeetle.png" %>', 200, 200);
+    game.load.spritesheet('dungbeetle', '<%= image_path "dungbeetle.png" %>', 200, 200);
+    game.load.spritesheet('mealybug', '<%= image_path "mealybug.png" %>', 200, 200);
+    game.load.spritesheet('pillbug', '<%= image_path "pillbug.png" %>', 200, 200);
+    game.load.spritesheet('spidermite', '<%= image_path "spidermite.png" %>', 200, 200);
+    game.load.spritesheet('vineborer', '<%= image_path "vineborer.png" %>', 200, 200);
+    game.load.audio('soundtrack', '<%= asset_path "soundtrack.mp3" %>');
+    game.load.audio('aphid', '<%= asset_path "aphid.mp3" %>');
+    game.load.audio('bee', '<%= asset_path "bee.mp3" %>');
+    game.load.audio('butterfly', '<%= asset_path "butterfly.mp3" %>');
+    game.load.audio('buzz', '<%= asset_path "buzz.mp3" %>');
+    game.load.audio('cornearworm', '<%= asset_path "cornearworm.mp3" %>');
+    game.load.audio('ding', '<%= asset_path "ding.mp3" %>');
+    game.load.audio('dungbeetle', '<%= asset_path "dungbeetle.mp3" %>');
+    game.load.audio('instructions', '<%= asset_path "instructions.mp3" %>');
+    game.load.audio('mealybug', '<%= asset_path "mealybug.mp3" %>');
+    game.load.audio('pillbug', '<%= asset_path "pillbug.mp3" %>');
+    game.load.audio('spidermite', '<%= asset_path "spidermite.mp3" %>');
+    game.load.audio('spray', '<%= asset_path "spray.mp3" %>');
+    game.load.audio('vineborer', '<%= asset_path "vineborer.mp3" %>');
+    game.load.audio('woosh', '<%= asset_path "woosh.mp3" %>');
+    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    game.scale.setShowAll();
+    game.scale.refresh();
   }
 
+  var instructions;
+  var ground;
   var score = 0;
   var scoreText;
   var timer;
@@ -31,22 +55,55 @@
   var seconds = 0;
   var minutes = 0;
   var bugsOnScreen = 0;
+  var bugP1 = true;
+  var bugP2 = true;
+  var bugP3 = true;
+  var safeBugs;
+  var badBugs;
   var bugs;
   var border;
   var netSprite;
   var spraySprite;
+  var bug;
+  var soundtrack;
+  var totalBugs = 0;
 
   function create(){
+
     timer = game.time.create(false);
+    soundtrack = game.add.sound('soundtrack', 0.4);
+    soundtrack.loop = true;
+    soundtrack.play();
     game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.add.image(0, 0, 'garden');
+    ground = game.add.image(0, 0, 'garden');
     border = game.add.image(0, 0, 'border');
     game.physics.arcade.enable(border);
     bugs = game.add.group();
-    bugs.enableBody = true;
-    bugs.physicsBodyType = Phaser.Physics.ARCADE;
-    bugs.add(game.add.sprite(400, 100, 'red'));
+    safeBugs = game.add.group();
+    safeBugs.enableBody = true;
+    safeBugs.physicsBodyType = Phaser.Physics.ARCADE;
+    badBugs = game.add.group();
+    badBugs.enableBody = true;
+    badBugs.physicsBodyType = Phaser.Physics.ARCADE;
+    bugs.add(safeBugs);
+    bugs.add(badBugs);
+    bug = game.add.sprite(50, 150, 'dungbeetle');
+    bug.inputEnabled = true;
+    bug.input.useHandCursor = true;
+    bugP1 = false;
+    bugsOnScreen++;
+    totalBugs++;
+    safeBugs.add(bug);
+    bug.body.bounce.y = 0.2;
+    bug.body.collideWorldBounds = true;
+    bug.animations.add('up', [0, 1], 10, true);
+    bug.animations.play(10, true, false);
     netSprite = game.add.sprite(50, 475, 'net');
+    netSprite.inputEnabled = true;
+    netSprite.input.useHandCursor = true;
+    netSprite.input.enableDrag(true);
+    game.physics.arcade.enable(netSprite);
+    netSprite.body.collideWorldBounds = true;
     spraySprite = game.add.sprite(200, 475, 'spray');
     spraySprite.inputEnabled = true;
     spraySprite.input.useHandCursor = true;
@@ -54,30 +111,374 @@
     game.physics.arcade.enable(spraySprite);
     spraySprite.body.collideWorldBounds = true;
     scoreText = game.add.text(16, 16, 'score: 0', {fontsize: '32px', fill: '#000' });
-    timer.loop(10000, addBug, this);
+    timer.loop(5000, addBug, this);
     timer.start();
   }
 
   function update(){
+  /*  if(game.input.mousePointer.isDown) {
+      for(var i = 0; i < safeBugs; i++) {
+        if(hitTest(safeBugs.getAt(i),game.input.mousePointer, game.input.mousePointer.position)) {
+          if(safeBugs.getAt(i).key == 'butterfly') {
+            game.add.sound('butterfly').play();
+          }
+          else if(safeBugs.getAt(i).key == 'bee') {
+            game.add.sound('bee').play();
+          }
+          else if(safeBugs.getAt(i).key == 'dungbeetle') {
+            game.add.sound('dungbeetle').play();
+          }
+          else if(safeBugs.getAt(i).key == 'pillbug') {
+            game.add.sound('pillbug').play();
+          }
+        }
+      }
+      for(var i = 0; i < badBugs; i++) {
+        if(hitTest(badugs.getAt(i),game.input.mousePointer, game.input.mousePointer.position)) {
+          if(badBugs.getAt(i).key == 'aphid') {
+            game.add.sound('aphid').play();
+          }
+          else if(badBugs.getAt(i).key == 'cucumberbeetle') {
+            game.add.sound('cucumberbeetle').play();
+          }
+          else if(badBugs.getAt(i).key == 'mealybug') {
+            game.add.sound('mealybug').play();
+          }
+          else if(badBugs.getAt(i).key == 'cornearworm') {
+            game.add.sound('cornearworm').play();
+          }
+          else if(badBugs.getAt(i).key == 'spidermite') {
+            game.add.sound('spidermite').play();
+          }
+          else if(badBugs.getAt(i).key == 'vineborer') {
+            game.add.sound('vineborer').play();
+          }
+        }
+      }
+    } */
     if(game.input.mousePointer.justReleased()) {
 
-      game.physics.arcade.overlap(spraySprite, bugs, killBug, null, this);
+      if(game.physics.arcade.overlap(spraySprite, safeBugs, killBug, null, this)) {
+        game.add.sound('spray', 0.7).play();
+        game.add.sound('buzz', 0.5).play();
+        bugsOnScreen--;
+      }
+      else if(game.physics.arcade.overlap(spraySprite, badBugs, killBug, null, this)) {
+        game.add.sound('spray', 0.7).play();
+        game.add.sound('ding', 0.8).play();
+        bugsOnScreen--;
+        score += 100;
+        scoreText.text = 'Score: ' + score;
+      }
+
+      else if(game.physics.arcade.overlap(netSprite, safeBugs, killBug, null, this)) {
+        game.add.sound('woosh', 1).play();
+        game.add.sound('ding', 0.8).play();
+        bugsOnScreen--;
+        score += 100;
+        scoreText.text = 'Score: ' + score;
+      }
+      else if(game.physics.arcade.overlap(netSprite, badBugs, killBug, null, this)) {
+        game.add.sound('woosh', 1).play();
+        game.add.sound('buzz', 0.5).play();
+        bugsOnScreen--;
+      }
       spraySprite.reset(200, 475);
+      netSprite.reset(50, 475);
 
+    }
+    if(totalBugs == 10 && bugsOnScreen == 0) {
+      soundtrack.fadeOut();
+      game.destroy();
+      save();
     }
   }
 
-  function addBug(){
+  function addBug() {
+    var position1X = 50;
+    var position2X = 250;
+    var position3X = 450;
+    var positionY = 150;
 
-    if(bugsOnScreen < 10) {
-      var positionX = Math.floor((Math.random() * 650) + 50);
-      var positionY = Math.floor((Math.random() * 450) + 50);
-      bugs.add(game.add.sprite(positionX, positionY, 'red'));
-      bugsOnScreen++;
+    if (totalBugs == 1 && bugsOnScreen < 3) {
+      if(bugP1) {
+        bug = game.add.sprite(position1X, positionY, 'bee');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        safeBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP1 = false;
+      }
+      else if(bugP2) {
+        bug = game.add.sprite(position2X, positionY, 'bee');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        safeBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP2 = false;
+      }
+      else if(bugP3) {
+        bug = game.add.sprite(position3X, positionY, 'bee');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        safeBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP3 = false;
+      }
+    }
+    else if(totalBugs == 2 && bugsOnScreen < 3) {
+      if(bugP1) {
+        bug = game.add.sprite(position1X, positionY, 'butterfly');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        safeBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP1 = false;
+      }
+      else if(bugP2) {
+        bug = game.add.sprite(position2X, positionY, 'butterfly');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        safeBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP2 = false;
+      }
+      else if(bugP3) {
+        bug = game.add.sprite(position3X, positionY, 'butterfly');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        safeBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP3 = false;
+      }
+    }
+    else if(totalBugs == 3 && bugsOnScreen < 3) {
+      if(bugP1) {
+        bug = game.add.sprite(position1X, positionY, 'cornearworm');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        badBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP1 = false;
+      }
+      else if(bugP2) {
+        bug = game.add.sprite(position2X, positionY, 'cornearworm');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        badBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP2 = false;
+      }
+      else if(bugP3) {
+        bug = game.add.sprite(position3X, positionY, 'cornearworm');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        badBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP3 = false;
+      }
+    }
+    else if(totalBugs == 4 && bugsOnScreen < 3) {
+      if(bugP1) {
+        bug = game.add.sprite(position1X, positionY, 'aphid');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        badBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP1 = false;
+      }
+      else if(bugP2) {
+        bug = game.add.sprite(position2X, positionY, 'aphid');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        badBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP2 = false;
+      }
+      else if(bugP3) {
+        bug = game.add.sprite(position3X, positionY, 'aphid');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        badBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP3 = false;
+      }
+    }
+    else if(totalBugs == 5 && bugsOnScreen < 3) {
+      if(bugP1) {
+        bug = game.add.sprite(position1X, positionY, 'cucumberbeetle');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        badBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP1 = false;
+      }
+      else if(bugP2) {
+        bug = game.add.sprite(position2X, positionY, 'cucumberbeetle');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        badBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP2 = false;
+      }
+      else if(bugP3) {
+        bug = game.add.sprite(position3X, positionY, 'cucumberbeetle');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        badBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP3 = false;
+      }
+    }
+    else if(totalBugs == 6 && bugsOnScreen < 3) {
+      if(bugP1) {
+        bug = game.add.sprite(position1X, positionY, 'mealybeetle');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        badBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP1 = false;
+      }
+      else if(bugP2) {
+        bug = game.add.sprite(position2X, positionY, 'mealybeetle');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        badBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP2 = false;
+      }
+      else if(bugP3) {
+        bug = game.add.sprite(position3X, positionY, 'mealybeetle');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        badBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP3 = false;
+      }
+    }
+    else if(totalBugs == 7 && bugsOnScreen < 3) {
+      if(bugP1) {
+        bug = game.add.sprite(position1X, positionY, 'pillbug');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        safeBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP1 = false;
+      }
+      else if(bugP2) {
+        bug = game.add.sprite(position2X, positionY, 'pillbug');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        safeBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP2 = false;
+      }
+      else if(bugP3) {
+        bug = game.add.sprite(position3X, positionY, 'pillbug');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        safeBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP3 = false;
+      }
+    }
+    else if(totalBugs == 8 && bugsOnScreen < 3) {
+      if(bugP1) {
+        bug = game.add.sprite(position1X, positionY, 'spidermite');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        badBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP1 = false;
+      }
+      else if(bugP2) {
+        bug = game.add.sprite(position2X, positionY, 'spidermite');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        badBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP2 = false;
+      }
+      else if(bugP3) {
+        bug = game.add.sprite(position3X, positionY, 'spidermite');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        badBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP3 = false;
+      }
+    }
+    else if(totalBugs == 9 && bugsOnScreen < 3) {
+      if(bugP1) {
+        bug = game.add.sprite(position1X, positionY, 'vineborer');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        badBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP1 = false;
+      }
+      else if(bugP2) {
+        bug = game.add.sprite(position2X, positionY, 'spidermite');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        badBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP2 = false;
+      }
+      else if(bugP3) {
+        bug = game.add.sprite(position3X, positionY, 'spidermite');
+        bug.inputEnabled = true;
+        bug.input.useHandCursor = true;
+        bug.
+        badBugs.add(bug);
+        bugsOnScreen++;
+        totalBugs++;
+        bugP3 = false;
+      }
     }
   }
 
-  /*function updateTime(){
+    var chapter = 1;
+    var grade = 0;
+
+    function save() {
+      grade = score / 10;
+      $.ajax({
+        type: "POST",
+        url: "/exit",
+        dataType: "json",
+        data: {chapter: chapter, grade: grade, score: score},
+        success: window.location.href='/'
+      });
+    }
+
+     /*function updateTime(){
     minutes = Math.floor(timer.ms / 60000) % 60;
 
     seconds = Math.floor(timer.ms / 1000) % 60;
@@ -97,14 +498,20 @@
     game.debug.text(minutes + ':'+ seconds + ':' + milliseconds, 250, 250);
   }*/
 
-  function killBug(spraySprite, bug){
+    function killBug(tool, bug) {
+    if(bug.x == 50) {
+      bugP1 = true;
+    }
+    else if(bug.x == 250) {
+      bugP2 = true;
+    }
+    else if(bug.x == 450) {
+      bugP3 = true;
+    }
     bug.kill();
-    score += 100;
-    scoreText.text = 'Score: ' + score;
   }
 
 
 
 </script>
-</div>
 

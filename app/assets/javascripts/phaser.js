@@ -356,7 +356,7 @@ Polygon.prototype.canSee = function(a,b) {
  * @method copy
  * @param  {Number} i
  * @param  {Number} j
- * @param  {Polygon} [targetPoly]   Optional target polygon to save in.
+ * @param  {Polygon} [targetPoly]   Optional target polygon to save.html.erb in.
  * @return {Polygon}                The resulting copy.
  */
 Polygon.prototype.copy = function(i,j,targetPoly){
@@ -5535,7 +5535,7 @@ RevoluteConstraint.prototype.update = function(){
     vec2.rotate(worldPivotA, pivotA, bodyA.angle);
     vec2.rotate(worldPivotB, pivotB, bodyB.angle);
 
-    // todo: these are a bit sparse. We could save some computations on making custom eq.computeGW functions, etc
+    // todo: these are a bit sparse. We could save.html.erb some computations on making custom eq.computeGW functions, etc
 
     x.G[0] = -1;
     x.G[1] =  0;
@@ -39976,7 +39976,7 @@ Phaser.InputHandler.prototype = {
                 x -= this.sprite.texture.trim.x;
                 y -= this.sprite.texture.trim.y;
 
-                //  If the coordinates are outside the trim area we return false immediately, to save doing a draw call
+                //  If the coordinates are outside the trim area we return false immediately, to save.html.erb doing a draw call
                 if (x < this.sprite.texture.crop.x || x > this.sprite.texture.crop.right || y < this.sprite.texture.crop.y || y > this.sprite.texture.crop.bottom)
                 {
                     this._dx = x;
@@ -50856,7 +50856,7 @@ PIXI.Graphics.prototype._generateCachedSprite = function()
     this._cachedSprite.anchor.x = -(bounds.x / bounds.width);
     this._cachedSprite.anchor.y = -(bounds.y / bounds.height);
 
-    // this._cachedSprite.buffer.context.save();
+    // this._cachedSprite.buffer.context.save.html.erb();
     this._cachedSprite.buffer.context.translate(-bounds.x, -bounds.y);
     
     // make sure we set the alpha of the graphics to 1 for the render.. 
@@ -59673,7 +59673,7 @@ Phaser.RandomDataGenerator.prototype = {
 
     /**
     * Gets or Sets the state of the generator. This allows you to retain the values
-    * that the generator is using between games, i.e. in a game save file.
+    * that the generator is using between games, i.e. in a game save.html.erb file.
     * 
     * To seed this generator with a previously saved state you can pass it as the 
     * `seed` value in your game config, or call this method directly after Phaser has booted.
@@ -85160,7 +85160,7 @@ Phaser.Physics.P2.prototype = {
     * @param {Phaser.Tilemap} map - The Tilemap to get the map data from.
     * @param {number|string|Phaser.TilemapLayer} [layer] - The layer to operate on. If not given will default to map.currentLayer.
     * @param {boolean} [addToWorld=true] - If true it will automatically add each body to the world, otherwise it's up to you to do so.
-    * @param {boolean} [optimize=true] - If true adjacent colliding tiles will be combined into a single body to save processing. However it means you cannot perform specific Tile to Body collision responses.
+    * @param {boolean} [optimize=true] - If true adjacent colliding tiles will be combined into a single body to save.html.erb processing. However it means you cannot perform specific Tile to Body collision responses.
     * @return {array} An array of the Phaser.Physics.P2.Body objects that were created.
     */
     convertTilemap: function (map, layer, addToWorld, optimize) {
@@ -91587,7 +91587,7 @@ Phaser.TilemapLayer.sharedCopyCanvas = null;
 /**
 * Create if needed (and return) a shared copy canvas that is shared across all TilemapLayers.
 *
-* Code that uses the canvas is responsible to ensure the dimensions and save/restore state as appropriate.
+* Code that uses the canvas is responsible to ensure the dimensions and save.html.erb/restore state as appropriate.
 *
 * @method Phaser.TilemapLayer#ensureSharedCopyCanvas
 * @protected

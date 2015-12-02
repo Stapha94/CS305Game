@@ -1,25 +1,31 @@
 <div class= "header">
  <div class= "container-fluid">
-  <div style="float: left;"><button type="button" onclick="window.location.href='/'" class="btn btn-default navbar-btn">Home</button></div>
   <h1> Facilitator Home Page </h1>
-
  </div>
 </div>
 
 <div class="panel panel-heading">
   <div class="toolbar">
     <div class= "container-fluid">
-     <div class= "row">
-      <div class= "col-xs-8">
-        <%= form_for(@student) do |f| %>
-          <%= f.text_field :sid, :placeholder => "Study ID" %>
-          <%= f.submit "Add student", formaction: facilitator_add_student_path, class: "btn btn-success" %>
-          <%= f.submit "Remove student", formaction: facilitator_remove_student_path, class: "btn btn-danger" %>
-        <% end %>
+      <div class= "row">
+        <div class= "col-xs-8">
+          <form class="new_student" id="new_student" action="/students" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="WdrHAIOqw10cmKWaWxv6slN/qFU7C9NZMO3GgTGdddhizGBe+Z9H4q6dA1Q5i1WTmyRuIgTxdBpPO1ILXsg7Sw==">
+            <input name="utf8" type="hidden" value="✓">
+            <input type="hidden" name="authenticity_token" value="WdrHAIOqw10cmKWaWxv6slN/qFU7C9NZMO3GgTGdddhizGBe+Z9H4q6dA1Q5i1WTmyRuIgTxdBpPO1ILXsg7Sw==">
+            <input placeholder="Study ID" style="float: left;" type="text" name="student[sid]" id="student_sid" vk_11b6c="subscribed">
+            <button type="submit" name="commit" formaction="/facilitator/add-student" class="btn btn-success" style="float: left;"><span class="glyphicon glyphicon-plus"></span></button>
+            <button type="submit" name="commit" formaction="/facilitator/remove-student" class="btn btn-danger" style="float: left;"><span class="glyphicon glyphicon-minus"></span></button>
+          </form>
+        </div>
+        <div class="col-xs-4">
+          <div class="search-match" style="float: right;">
+            <input id="search-field" name="search-field" type="text" />
+            <button class="btn btn-default" name="search-btn" type="button" onclick="search()"><span class="glyphicon glyphicon-search"></span></button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
- </div>
 </div>
 <div id="main-container" class="container">
       <div class="row">
@@ -45,6 +51,13 @@
        <li><a data-target="#" href="/facilitator?sortbyreversesid" >SID (Z-A)</a></li>
      </ul>
    </div>
+   <div class="radio-inline">
+     <label><input id="all" type="radio" name="optradio" value="" onclick="addDanger()">Show All</label>
+   </div>
+   <div class="radio-inline">
+      <label><input id="enrolled" type="radio" name="optradio" value="" checked="checked" onclick="removeDanger()">Only Show Enrolled</label>
+   </div>
+   </div>
    <div class="col-xs-12">
      <div class="table-responsive">
      <table class="table">
@@ -56,13 +69,13 @@
            <% @students.each do |s| %>
                <% if s.enrolled%>
                    <tr class="success">
-                     <td><%= s.sid %></td>
-                     <td><%= s.ch1 %></td>
+                     <td class="sid"><%= s.sid %></td>
+                     <td class="ch1"><%= s.ch1 %></td>
                    </tr>
                <% else %>
                    <tr class="danger">
-                     <td><%= s.sid %></td>
-                     <td><%= s.ch1 %></td>
+                     <td class="sid"><%= s.sid %></td>
+                     <td class="ch1"><%= s.ch1 %></td>
                    </tr>
                <% end %>
            <% end %>
@@ -71,28 +84,28 @@
             <% @students.each do |s| %>
              <% if s.enrolled%>
              <tr class="success">
-               <td><%= s.sid %></td>
-               <td><%= s.ch1 %></td>
+               <td class="sid"><%= s.sid %></td>
+               <td class="ch1"><%= s.ch1 %></td>
            </tr>
                <% else %>
                 <tr class="danger">
-               <td><%= s.sid %></td>
-               <td><%= s.ch1 %></td>
+               <td class="sid"><%= s.sid %></td>
+               <td class="ch1"><%= s.ch1 %></td>
            </tr>
               <% end %>
              <% end %>
        <% elsif request.fullpath == '/facilitator?sortbych1' %>
-           <% @students = Student.order(:ch1) %>
+           <% @students = Student.order(ch1: :desc) %>
            <% @students.each do |s| %>
                <% if s.enrolled%>
                    <tr class="success">
-                     <td><%= s.sid %></td>
-                     <td><%= s.ch1 %></td>
+                     <td class="sid"><%= s.sid %></td>
+                     <td class="ch1"><%= s.ch1 %></td>
                    </tr>
                <% else %>
                    <tr class="danger">
-                     <td><%= s.sid %></td>
-                     <td><%= s.ch1 %></td>
+                     <td class="sid"><%= s.sid %></td>
+                     <td class="ch1"><%= s.ch1 %></td>
                    </tr>
                <% end %>
            <% end %>
@@ -101,13 +114,13 @@
              <% @students.each do |s| %>
                  <% if s.enrolled%>
                      <tr class="success">
-                       <td><%= s.sid %></td>
-                       <td><%= s.ch1 %></td>
+                       <td class="sid"><%= s.sid %></td>
+                       <td class="ch1"><%= s.ch1 %></td>
                      </tr>
                  <% else %>
                      <tr class="danger">
-                       <td><%= s.sid %></td>
-                       <td><%= s.ch1 %></td>
+                       <td class="sid"><%= s.sid %></td>
+                       <td class="ch1"><%= s.ch1 %></td>
                      </tr>
                  <% end %>
              <% end %>
@@ -115,6 +128,92 @@
 	</table>
      </div>
     </div>
-    <%= link_to "Download Report", facilitator_download_report_path, class: "btn btn-info" %>
-</div>
-</div>
+   </div>
+   <div class="row">
+     <form class="button_to" method="post" action="/facilitator/download-report">
+       <button class="btn btn-info" type="submit"><span class="glyphicon glyphicon-download-alt"></span> Download Report</button>
+       <input type="hidden" name="authenticity_token" value="TUQRJWGleoQQwOJunqwwWB7HAx3vTHlBYl407LdeTkV2UrZ7G5D+O6LFRKD8PJ951pzFatC23gIdiKBm2AsA1g==">
+     </form>
+   </div>
+
+<script>
+  function removeDanger(){
+    $('tr.danger').hide();
+    $('#enrolled').attr('checked', true);
+    $('#all').attr('checked', false);
+    setCookie("checked", true, false);
+  }
+  function addDanger(){
+    $('tr').show();
+    $('#all').attr('checked', true);
+    $('#enrolled').attr('checked', false);
+    setCookie("checked", false, true);
+  }
+
+  function search(){
+    var $titles = $("tr.active");
+    var $rows = $("tr.success");
+    var $dangerrows = $("tr.danger");
+
+    var searchInput = $.trim($('#search-field').val().toUpperCase());
+    if (searchInput === "" && $("#enrolled").is(":checked")) {
+      $titles.show();
+      $rows.show();
+    }
+    else if (searchInput === "" && $("#all").is(":checked")) {
+      $titles.show();
+      $rows.show();
+      $dangerrows.show();
+    }
+    else if ($("#enrolled").is(":checked")) {
+      $rows.hide();
+      $rows.has("td.sid:contains(" + searchInput + ")").show();
+    }
+    else if ($("#all").is(":checked")) {
+      $rows.hide();
+      $dangerrows.hide();
+      $rows.has("td.sid:contains(" + searchInput + ")").show();
+      $dangerrows.has("td.sid:contains(" + searchInput + ")").show();
+    }
+  }
+
+  function setCookie(cname, enr, a){
+    var d = new Date();
+    d.setTime(d.getTime() + (24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    var enrolled = enr;
+    var all = a;
+    if(enrolled) {
+      document.cookie = cname + "=enrolled" + "; " + expires;
+    }
+    else if(all) {
+      document.cookie = cname + "=all" + "; " + expires;
+    }
+  }
+
+  function getCookie(cname){
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++){
+      var c = ca[i];
+      while (c.charAt(0)==' ') c = c.substring(1);
+      if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+    }
+    return "";
+  }
+
+  function checkCookie(){
+    var checked = getCookie("checked");
+    if(checked == ""){
+      removeDanger();
+    }
+    else if(checked == "enrolled") {
+      removeDanger();
+    }
+    else if(checked == "all") {
+      addDanger();
+    }
+  }
+
+  window.onload = checkCookie();
+</script>

@@ -42,7 +42,7 @@ class SessionsController < ApplicationController
         format.html {redirect_to '/admin'}
       else
         flash[:danger] = 'Login failed. Check information!'
-        format.html { redirect_to '/student-login' }
+        format.html { redirect_to '/user-login' }
       end
      end
   end

@@ -2,8 +2,7 @@
 
 <div class= "header">
  <div class= "container-fluid">
-  <div style="float: left;"><button type="button" onclick="window.location.href='/'" class="btn btn-default navbar-btn">Home</button></div>
-  <h1> Admin Home Page </h1>
+  <h1 style="float: left;"> Admin Home Page </h1>
 
  </div>
 </div>
@@ -23,16 +22,42 @@
       <% end %>
       </div>
     </div>
-  <div class="col_centered-xs-6"></div>
-  <div class="col_centered-xs-3">
+  <div class="col_centered-xs-6">
     <div class="well">
    <%= form_for(@facilitator) do |f| %>
       <div class="form-group"><%= f.text_field :first, :placeholder => "First Name" %></div>
       <div class="form-group"><%= f.text_field :last, :placeholder => "Last Name" %></div>
+      <div class="form-group"><%= f.email_field :email, :placeholder => "Email" %></div>
       <div class="form-group"><%= f.submit "Remove Facilitator", formaction: admin_remove_facilitator_path, class: "btn btn-danger" %></div>
     <% end %>
     </div>
   </div>
+   <div class="col-xs-12">
+     <div class="table-responsive">
+       <table class="table">
+         <tr class="active">
+           <td> Email </td>
+           <td> First </td>
+           <td> Last </td>
+         </tr>
+             <% @facilitators.each do |s| %>
+                 <% if s.active%>
+                     <tr class="success">
+                       <td class="sid"><%= s.email %></td>
+                       <td class="ch1"><%= s.first %></td>
+                       <td class="ch1"><%= s.last %></td>
+                     </tr>
+                 <% else %>
+                     <tr class="danger">
+                       <td class="sid"><%= s.email %></td>
+                       <td class="ch1"><%= s.first %></td>
+                       <td class="ch1"><%= s.last %></td>
+                     </tr>
+                 <% end %>
+             <% end %>
+       </table>
+     </div>
+   </div>
 
 
 

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'students#home'
   get '/main-game' => 'students#game'
+  post '/exit' => 'students#save'
   get '/facilitator' => 'students#new'
   get '/facilitator?sortbysid' => 'students#new'
   get '/facilitator?sortbych1' => 'students#new'
@@ -23,7 +24,7 @@ Rails.application.routes.draw do
   get '/facilitator/remove-student' => 'students#delete'
   get '/facilitator/view-students' => 'students#index'
   resources :students
-  get '/facilitator/download-report' => 'facilitators#download'
+  post '/facilitator/download-report' => 'facilitators#download'
   resources :students
 
   # The priority is based upon order of creation: first created -> highest priority.

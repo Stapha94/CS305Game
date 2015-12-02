@@ -10,30 +10,45 @@
 <body>
 <div class ="nav pull-right">
   <% if current_facilitator %>
-  <ul>
-    <li><%= current_facilitator.email %></li>
-    <li><%= button_to "Log Out", logout_path, method: "delete" %></li>
+  <ul class="list-group">
+    <li class="list-group-item-text"><%= current_facilitator.last + "," + current_facilitator.first %></li>
+    <li class="list-group-item-text">
+      <form class="button_to" method="post" action="/logout">
+        <input type="hidden" name="_method" value="delete">
+        <button class="btn btn-warning" type="submit" onclick="deleteCookie()">Log Out <span class="glyphicon glyphicon-log-out"></span></button>
+        <input type="hidden" name="authenticity_token" value="PKRTySvRcgZPwiGfvceKBitJOmYlTBUlM8drgW3vkPsHsvSXUeT2uf3Hh1HfVyUn4xL8ERq2smZMEf8LArreaA==">
+      </form>
+    </li>
   </ul>
   <% elsif current_admin %>
   <ul>
-    <li><%= current_admin.email %></li>
-    <li><%= button_to "Log Out", logout_path, method: "delete" %></li>
+    <li><%= current_admin.last + "," + current_admin.first %></li>
+    <li class="list-group-item-text">
+      <form class="button_to" method="post" action="/logout">
+      <input type="hidden" name="_method" value="delete">
+        <button class="btn btn-warning" type="submit">Log Out <span class="glyphicon glyphicon-log-out"></span></button>
+      <input type="hidden" name="authenticity_token" value="PKRTySvRcgZPwiGfvceKBitJOmYlTBUlM8drgW3vkPsHsvSXUeT2uf3Hh1HfVyUn4xL8ERq2smZMEf8LArreaA==">
+    </form>
+    </li>
   </ul>
   <% elsif current_student %>
-      <ul>
-        <li><%= current_student.sid %></li>
-        <li><%= button_to "Log Out", logout_path, method: "delete" %></li>
-      </ul>
+      <form class="button_to" method="post" action="/logout" style="float: right;">
+        <input type="hidden" name="_method" value="delete">
+        <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-off"></span></button>
+        <input type="hidden" name="authenticity_token" value="2DB29jF68Utl+Qp4RSlkYP6VDmAVxj8rdA4FKPVCF/jjJtGoS0919Nf8rLYnuctBNs7IFyo8mGgL2JGimhdZaw==">
+      </form>
+      <h2 style="margin-top: 70%; color: white;"><%= current_student.sid %></h2>
   <% end %>
 </div>
 <%= yield %>
 
-<div class="footer">
-<div class="container">
+  <footer class="footer">
   Courtesy of CS 305 Marshall University
-</div>
-</div>
+  </footer>
 <script language="javascript">
+  function deleteCookie(){
+    document.cookie = "checked=; expires=expires=Thu, 01 Jan 1970 00:00:00 UTC";
+  }
 </script>
 </body>
 </html>

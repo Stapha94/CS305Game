@@ -4,6 +4,5 @@ class Student < ActiveRecord::Base
     self.sid.upcase!
   end
   belongs_to :facilitator
-  has_many :answers
-  has_many :questions, through: :answers
+  has_many :reports
 end

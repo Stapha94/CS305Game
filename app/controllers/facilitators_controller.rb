@@ -7,18 +7,62 @@ class FacilitatorsController < ApplicationController
 
   def new
     @facilitator = Facilitator.new
+    @facilitators = Facilitator.all
   end
   def create
     @facilitator = Facilitator.new(facilitator_params)
-    if @facilitator.save
+    if Facilitator.exists?(email: @facilitator.email)
+      @exisitingfacilitator = Facilitator.find_by_email(@facilitator.email)
+      if @exisitingfacilitator.active
+        respond_to do |format|
+          flash[:danger] = 'Facilitator already exists!'
+          format.html { redirect_to '/admin' }
+        end
+      else
+        @exisitingfacilitator.update_attribute(:active, true)
+        respond_to do |format|
+          UserMailer.welcome_email(@facilitator).deliver
+          flash[:success] = 'Facilitator Added!'
+          format.html { redirect_to '/admin' }
+        end
+      end
+    elsif @facilitator.save
       respond_to do |format|
         UserMailer.welcome_email(@facilitator).deliver
-        flash[:success] = 'Facilitator Added'
+        flash[:success] = 'Facilitator Added!'
         format.html { redirect_to '/admin' }
       end
     else
       respond_to do |format|
-        flash[:danger] = 'Passwords Did Not Match'
+        flash[:danger] = 'Passwords Did Not Match!'
+        format.html { redirect_to '/admin' }
+      end
+    end
+    end
+  def remove
+    @newfacilitator = Facilitator.new(facilitator_params)
+    @facilitator = Facilitator.find_by_email(@newfacilitator.email)
+    respond_to do |format|
+      if @facilitator.nil? || @facilitator.active == false
+        flash[:danger] = 'Facilitator does not exist!'
+        format.html { redirect_to '/admin' }
+      else
+        @facilitator.update_attribute(:active, false)
+        flash[:success] = 'Facilitator removed!'
+        format.html { redirect_to '/admin' }
+      end
+    end
+  end
+  def activate
+    @newfacilitator = Facilitator.new(facilitator_params)
+    @facilitator = Facilitator.find_by_email(@newfacilitator.email)
+    respond_to do |format|
+      if @facilitator.nil? || @facilitator.active == true
+        flash[:danger] = 'Facilitator does not exist or is already active!'
+        format.html { redirect_to '/admin' }
+      else
+        @facilitator.update_attribute(:active, true)
+        flash[:success] = 'Facilitator reactivated!'
         format.html { redirect_to '/admin' }
       end
     end
@@ -33,14 +77,14 @@ class FacilitatorsController < ApplicationController
   end
   private
   def generate_report
-    @students = Student.order(:sid)
+    @students = Student.order(ch1: :desc)
     CSV.open("public/studentreport.csv", "wb") do |csv|
-      csv << ["SID", "Chapter 1", "Enrolled"]
+      csv << ["SID", "Chapter 1"]
       @students.each do |s|
-        csv << [s.sid, s.ch1, s.enrolled]      
+        if s.enrolled
+          csv << [s.sid, s.ch1]
+        end
       end
     end
-  end
-  def remove
   end
 end

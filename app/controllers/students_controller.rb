@@ -43,6 +43,35 @@ class StudentsController < ApplicationController
       end
     end
   end
+  def save
+    sid = current_student.sid
+    chapter = params[:chapter].to_i
+    grade = params[:grade].to_i
+    score = params[:score].to_i
+    Report.create(sid: sid, chapter: chapter, grade: grade, score: score)
+    @student = Student.find_by_sid(current_student.sid)
+    if chapter == 1
+      if @student.ch1 < grade
+        @student.update_attribute(:ch1, grade)
+      end
+    elsif chapter == 2
+      if @student.ch2 < grade
+        @student.update_attribute(:ch2, grade)
+      end
+    elsif chapter == 4
+      if @student.ch4 < grade
+        @student.update_attribute(:ch4, grade)
+      end
+    elsif chapter == 6
+      if @student.ch6 < grade
+        @student.update_attribute(:ch6, grade)
+      end
+    elsif chapter == 7
+      if @student.ch7 < grade
+        @student.update_attribute(:ch7, grade)
+      end
+    end
+  end
   def delete
   end
   def remove
